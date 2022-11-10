@@ -9,7 +9,7 @@ from sklearn.metrics import roc_auc_score
 
 import matplotlib.pyplot as plt
 
-#%% Read in csvs
+#%% Read in csv
 df_train = pd.read_csv('train.csv')
 df_test = pd.read_csv('test.csv')
 
