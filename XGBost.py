@@ -1,3 +1,6 @@
+# Git name = XGBmodel
+# 
+
 #%% Importing necessary libraries
 import numpy as np
 import pandas as pd
@@ -55,5 +58,5 @@ X_train.shape, X_test.shape
 
 
 
-#%% Creating the XGB model
+#%% Creating the model
 
