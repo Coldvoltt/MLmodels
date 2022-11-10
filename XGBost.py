@@ -1,6 +1,3 @@
-# Git name = XGBmodel
-# 
-
 #%% Importing necessary libraries
 import numpy as np
 import pandas as pd
@@ -38,24 +35,27 @@ prop
 df_train = df_train.fillna(df_train.median()) #Median imputation
 df_train = df_train.loc[:,(df_train.min() != df_train.max())] # Removing single-valued variables
 
-#%%
-from sklearn.preprocessing import normalize
-df_train = normalize(df_train) # Normalizing predictors
 
 # %% Separating response from predictors
-X  = df_train.drop(columns = ['label'])
+X  = df_train.drop(['label'], axis = 1)
 y = df_train['label']
+
+#%% Normalization
+df_X = X.copy() # copy the data into df
+
+# Apply min-max fn
+for column in df_X.columns:
+    df_X[column] = (df_X[column] - df_X[column].min()) /(df_X[column].max() - df_X[column].min())
+
 #%% Tackling class imbalance
 from imblearn.over_sampling import SMOTE
 oversample = SMOTE()
-X,y = oversample.fit_resample(X, y)
+df_X,y = oversample.fit_resample(df_X, y)
 
 
 #%% Partitioning df_train into test and train for local training and testing
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=.2)
+X_train, X_test, y_train, y_test = train_test_split(df_X,y, test_size=.2)
 X_train.shape, X_test.shape
-
-
 
 
 #%% Creating the model
