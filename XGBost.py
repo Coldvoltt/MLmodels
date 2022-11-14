@@ -61,18 +61,27 @@ X_train.shape, X_test.shape
 #%% Creating the model
 xgboost.XGBClassifier().get_params()
 
-# %%
+# %% Creating the model
 xgbMod = xgboost.XGBClassifier(learning_rate = 0.1, max_depth = 5, n_estimator = 5000, subsample =.5, colsample_bytree = .5, eval_metric = 'auc',verbosity = 1)
 
-#%%
+#%% Fitting the model
 xgbMod.fit(X_train, y_train, verbose = True)
-# %%
+
+# %% Making prediction with test set
 y_pred = xgbMod.predict(X_test)
-# %%
+
+#%% Model evaluation
 from sklearn.metrics import confusion_matrix, accuracy_score
 confusion_matrix(y_test, y_pred)
-#%%
+#%% Model evaluation
 accuracy_score(y_test, y_pred)
 #%%
 roc_auc_score(y_test, y_pred)
+
+# %% Save model
+import joblib
+joblib.dump(xgbMod, 'xgboostModel.joblib')
+
+
+
 # %%
